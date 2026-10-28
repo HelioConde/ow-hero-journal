@@ -31,3 +31,6 @@ Inspecionadas capturas reais do Playwright em 320 e 390 px; link de pular conte�
 
 ## QA de teclado, contraste e formulários (28/10/2026)
 Testes diretos no Chrome/Playwright de Tab/Shift+Tab, foco visível, acesso rápido ao conteúdo, rótulos dos campos, contraste dos campos e placeholders (alvo 4,5:1), e altura mínima de 44px em navegação, formulários e ações principais. CSS específico em `a11y.css`; preservados design próprio, CRUD, backups e armazenamento. Esta é uma checagem automatizada direcionada, não certificação WCAG integral.
+
+## Menu mobile tático
+Até 640px, `details/summary` oferece links diretos a Treino por herói, Relatórios e Nova decisão. Abre com Enter; fecha com Escape, escolha de destino ou clique fora. O menu desktop permanece intacto. Playwright valida fluxo em cinco larguras; sem backend ou alteração de dados.
