@@ -17,6 +17,18 @@ const sleep=n=>new Promise(resolve=>setTimeout(resolve,n));
    const response=await page.goto("http://127.0.0.1:8755/",{waitUntil:"load"});if(response.status()!==200)errors.push("Home status "+response.status());
    await page.getByRole("heading",{level:1}).waitFor();
     await auditAccessibility(page,errors);
+   const menu=page.locator("header details.mobile-nav");
+   if(page.viewportSize().width<=640){
+    if(!await menu.isVisible())errors.push("Mobile menu is hidden");
+    const summary=menu.locator("summary");await summary.focus();await page.keyboard.press("Enter");
+    if(!await menu.evaluate(el=>el.open))errors.push("Keyboard Enter did not open mobile menu");
+    if(await menu.locator("nav a").count()!==3)errors.push("Mobile menu link count");
+    await page.keyboard.press("Escape");if(await menu.evaluate(el=>el.open))errors.push("Escape did not close menu");
+    await summary.click();const dest=await menu.locator("nav a").first().getAttribute("href");await menu.locator("nav a").first().click();
+    if(await menu.evaluate(el=>el.open))errors.push("Menu remained open after navigation");
+    if(await page.evaluate(()=>location.hash)!==dest)errors.push("Mobile navigation did not jump to target");
+   }else if(await menu.isVisible())errors.push("Mobile menu visible on desktop");
+
     // Keyboard-only skip link must remain visually clipped when not focused, then reveal on focus.
     const skip=page.locator("a.skip,a.skip-link");
     if(await skip.count()!==1)errors.push("Missing unique keyboard skip link");

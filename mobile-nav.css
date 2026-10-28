@@ -1,0 +1,15 @@
+/* Tactical orange mobile jump menu, follows the OW hero design. */
+.mobile-nav{display:none}
+@media(max-width:640px){
+.header .nav{gap:8px}.header .demo-pill{display:none!important}
+.header .brand{max-width:calc(100% - 66px);min-width:0}
+.header .mobile-nav{display:block;position:relative;margin-left:auto;flex:none;z-index:90}
+.header .mobile-nav summary{list-style:none;display:flex;align-items:center;justify-content:center;gap:6px;min-width:58px;min-height:48px;padding:8px;background:#ff986c;color:#172b34;border:2px solid #ffbd91;font:900 11px system-ui;cursor:pointer;text-transform:uppercase;letter-spacing:.02em}
+.header .mobile-nav summary::-webkit-details-marker{display:none}
+.header .mobile-nav summary::before{content:"☰";font-size:18px;line-height:1}
+.header .mobile-nav[open] summary::before{content:"×";font-size:23px}
+.header .mobile-nav .mobile-nav-panel{display:grid!important;position:absolute;right:0;top:calc(100% + 7px);z-index:91;width:min(260px,calc(100vw - 30px));padding:8px;background:#27333a;border:2px solid #fc8e5d;box-shadow:5px 6px 0 #d75c32}
+.header .mobile-nav-panel a{display:flex;align-items:center;min-height:48px;padding:11px 13px;text-decoration:none;border-bottom:1px solid #4c5960;color:#fff9f2;font:850 13px system-ui;white-space:normal}
+.header .mobile-nav-panel a:hover{background:#45525a}
+.header .mobile-nav :is(summary,a):focus-visible{outline:3px solid #ffd59f!important;outline-offset:3px}
+}
