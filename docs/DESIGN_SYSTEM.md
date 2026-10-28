@@ -25,3 +25,6 @@ GitHub Actions executa testes estáticos e Playwright em 320, 390, 768, 1366, 16
 
 ## Central de treinamento por herói
 Cada herói recebe uma ficha de briefing baseada no exercício mais recente do próprio histórico. Botão `Ver histórico` filtra as partidas pelo herói; `Preparar treino` inicia rascunho com herói, função e exercício, sem salvar indevidamente nova partida. Não há classificação automática nem mudança do schema de dados. Playwright exercita os dois botões.
+
+## Auditoria visual de screenshots (28/10/2026)
+Inspecionadas capturas reais do Playwright em 320 e 390 px; link de pular conteúdo agora recortado por `clip-path` fora do foco, revelado no foco de teclado. Hero mobile compactado sem remover CTA ou funções. QA acrescenta teste de acesso por foco ao skip link e mantém verificação de overflow e operações locais.
