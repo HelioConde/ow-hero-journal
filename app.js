@@ -78,6 +78,22 @@ function renderGroups(){
   }
   if(config.metric)container.append(newNode("p","insights-warning","As médias vêm de anotações manuais e amostras pequenas. Compare apenas dentro do mesmo Set e patch; a colocação é do tabuleiro inteiro."));
 }
+function renderHeroDrills(){
+ const out=$("#hero-drills");out.replaceChildren();
+ const names=[...new Set(records.map(r=>r.hero))].sort((a,b)=>a.localeCompare(b,"pt-BR"));
+ if(!names.length){out.append(newNode("p","drill-empty","Registre uma partida ou carregue exemplos fictícios para criar sua pauta de treino."));return;}
+ for(const name of names.slice(0,18)){
+  const notes=records.filter(r=>r.hero===name).sort((a,b)=>b.date.localeCompare(a.date)||b.updatedAt.localeCompare(a.updatedAt)),last=notes[0];
+  const card=newNode("article","drill-card");const upper=newNode("div","drill-top");
+  upper.append(newNode("span","drill-label","FICHA DE TREINO / "+last.role),newNode("span","drill-date",last.date));card.append(upper);
+  card.append(newNode("h3","",name),newNode("p","drill-counter",notes.length+" anotação"+(notes.length===1?"":"ões")+" · "+new Set(notes.map(r=>r.decision)).size+" área(s) de decisão"));
+  const task=newNode("div","drill-task");task.append(newNode("strong","","PRÓXIMA PRÁTICA"),newNode("p","",last.exercise));card.append(task);
+  const buttons=newNode("div","drill-actions");
+  const history=newNode("button","","Ver histórico");history.type="button";history.dataset.drill="history";history.dataset.hero=name;
+  const prepare=newNode("button","drill-primary","Preparar treino");prepare.type="button";prepare.dataset.drill="prepare";prepare.dataset.hero=name;
+  buttons.append(history,prepare);card.append(buttons);out.append(card);
+ }
+}
 function recordCard(r){
  const article=newNode("article","entry-card");
  const head=newNode("div","card-head"),title=newNode("h3","",r[config.titleField]);
@@ -96,7 +112,7 @@ function recordCard(r){
  }article.append(actions);return article;
 }
 function render(){
- renderGroups();const search=elements.search.value.trim().toLocaleLowerCase("pt-BR"),group=elements.filter.value;
+ renderGroups();renderHeroDrills();const search=elements.search.value.trim().toLocaleLowerCase("pt-BR"),group=elements.filter.value;
  const found=[...records].sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt)).filter(r=>(!group||keyOf(r)===group)&&(!search||keys.some(k=>String(r[k]).toLocaleLowerCase("pt-BR").includes(search))));
  elements.entries.replaceChildren(...found.map(recordCard));
  $("#total").textContent=records.length;
@@ -133,6 +149,17 @@ elements.entries.addEventListener("click",event=>{
 });
 elements.filter.addEventListener("change",()=>{render();});
 elements.search.addEventListener("input",()=>{render();});
+$("#hero-drills").addEventListener("click",event=>{
+ const button=event.target.closest("button[data-drill]");if(!button)return;
+ const hero=button.dataset.hero;
+ if(button.dataset.drill==="history"){elements.filter.value=hero;elements.search.value="";render();$("#registros").scrollIntoView({behavior:"instant"});return;}
+ const latest=records.filter(r=>r.hero===hero).sort((a,b)=>b.date.localeCompare(a.date)||b.updatedAt.localeCompare(a.updatedAt))[0];
+ if(!latest)return;
+ startNew();$("#field-hero").value=hero;$("#field-role").value=latest.role;$("#field-exercise").value=latest.exercise;
+ $("#field-observation").value="";
+ announce("Treino preparado com o último exercício de "+hero+". Complete o registro após praticar.");
+ $("#novo").scrollIntoView({behavior:"instant"});$("#field-map").focus({preventScroll:true});
+});
 $("#demo").addEventListener("click",()=>{
  if(records.length&&!confirm("Substituir registros por exemplos fictícios?"))return;
  records=config.demo.map((r,i)=>({...r,id:"demo-"+i+"-"+config.id,updatedAt:now()}));
