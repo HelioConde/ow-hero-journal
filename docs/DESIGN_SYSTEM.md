@@ -34,3 +34,6 @@ Testes diretos no Chrome/Playwright de Tab/Shift+Tab, foco visível, acesso ráp
 
 ## Menu mobile tático
 Até 640px, `details/summary` oferece links diretos a Treino por herói, Relatórios e Nova decisão. Abre com Enter; fecha com Escape, escolha de destino ou clique fora. O menu desktop permanece intacto. Playwright valida fluxo em cinco larguras; sem backend ou alteração de dados.
+
+## Navegação desktop orientada ao produto
+Cabeçalho desktop aponta diretamente para Treinos, Relatórios, Nova decisão. Teste Playwright verifica os três destinos existentes e acesso em 768/1366/1600px. Badge secundário é suprimido em telas intermediárias para evitar overflow. Menu móvel permanece independente.
