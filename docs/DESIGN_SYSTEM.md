@@ -22,3 +22,6 @@ GitHub Actions executa testes estáticos e Playwright em 320, 390, 768, 1366, 16
 
 ## Diferenciação visual — 27/10/2026
 **Layout original do produto, não tema copiado.** Relatório pós-partida editorial: manchete tipográfica laranja, linha do tempo vertical e formulário escuro. O arquivo `identity.css` contém a identidade sem alterar armazenamento ou componentes funcionais. Resoluções críticas: 320, 390, 768, 1366 e 1600 pixels. Contraste/foco mantidos e movimento reduzido respeitado.
+
+## Central de treinamento por herói
+Cada herói recebe uma ficha de briefing baseada no exercício mais recente do próprio histórico. Botão `Ver histórico` filtra as partidas pelo herói; `Preparar treino` inicia rascunho com herói, função e exercício, sem salvar indevidamente nova partida. Não há classificação automática nem mudança do schema de dados. Playwright exercita os dois botões.
